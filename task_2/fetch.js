@@ -1,33 +1,26 @@
 const fetch = require('node-fetch');
 const fs = require('fs');
 
-const toText = (response) => {
-  return response.text()
-}
+async function getIt() {
 
-const getIt = async()=> {
-  await fetch('http://nodejs.org/dist/index.json')
-  .then(toText)
-  .then(data => {
-    fs.writeFile("nodejs.txt", data);
-    console.log('data', data);
-  })
-  await fetch('https://github.com/bitinn/node-fetch')
-  .then(toText)
-  .then(data => {
-   fs.writeFile("github_2.txt", data);
-   console.log('data', data);
- })
-  await fetch ('https://lenta.ru/')
-  .then(toText)
-  .then(data => {
-   fs.writeFile("lenta.txt", data);
-   return console.log('data', data);
- })
-  .catch(error => {
-    console.log(error);
-  })
+  try {
+    let res1 = await fetch('http://nodejs.org/dist/index.json');
+    res1 = await res1.json();
+    console.log (res1);
+    fs.writeFile("nodejs.txt", res1);
+
+    let res2 = await fetch('https://github.com/bitinn/node-fetch');
+    res2 = await res2.text();
+    console.log (res2);
+    fs.writeFile("github_2.txt", res2);
+
+    let res3 = await fetch ('https://lenta.ru/');
+    res3 = await res3.text();
+    console.log (res3);
+    fs.writeFile("lenta.txt", res3);
+  } catch (err) {
+    console.error (`There was an error: ${err}`)
+  }
 }
 
 getIt()
-

@@ -14,10 +14,12 @@ const getUrl =(url)=> {
 }
 
 const getIt = async ()=> {
-  const res = await getUrl('http://nodejs.org/dist/index.json');
-  return res;
+  try {
+  let res = await getUrl('http://nodejs.org/dist/index.json');
+   console.log (res);
+} catch (err) {
+    console.error (`There was an error: ${err}`)
+  }
 }
 
 getIt()
-.then(res => console.log(res))
-.catch (reason => console.error (`There was an error: ${reason}`))
